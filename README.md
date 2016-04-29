@@ -1,6 +1,6 @@
 #Host Access
 
-Host Access 是一个基于WF-ONOS的宽带接入APP. 目前只支持IPOE接入方式
+Host Access 是一个基于WF-ONOS的宽带接入APP. 目前只支持IPOE接入方式。
 
 ## 快速指南
 
@@ -11,14 +11,14 @@ Host Access 是一个基于WF-ONOS的宽带接入APP. 目前只支持IPOE接入�
 ### 安装
 
 - 下载安装WFNOS， https://github.com/wfnex/WFNOS_bin。WFNOS是一个网络操作系统底层架构。
-	下载RPM。 wfnos-2.0.0-1.x86_64.rpm ， 安装命令rpm -ihv wfnos-2.0.0-1.x86_64.rpm --force --nodeps
+	下载RPM。 wfnos-2.0.0-1.x86_64.rpm, 安装命令rpm -ihv wfnos-2.0.0-1.x86_64.rpm --force --nodeps
 	安装路径/opt/wfnos. 设置环境变量WFNOS_HOME=/opt/wfnos.
 - 下载安装VBNG， https://github.com/wfnex/vbng_bin。VBNG是宽带接入协议处理模块。
 	下载RPM包，vbng-2.0.2-1.x86_64.rpm， 安装命令rpm -ihv vbng-2.0.2-1.x86_64.rpm --force --nodeps
 - 下载安装ONOS， https://github.com/wfnex/wfonos。ONOS是个开源的网络操作系统。
 	下载RPM包，wfonos-1.6.0-1.x86_64.rpm, 安装命令rpm -ihv wfonos-1.6.0-1.x86_64.rpm --force --nodeps
 
-- 卸载。rpm -e wfnos下载wfnos.  rpm -e vbng 卸载vbng. rpm -e wfonos 下载wfonos
+- 卸载。rpm -e wfnos卸载wfnos.  rpm -e vbng 卸载vbng. rpm -e wfonos卸载wfonos
 
 
 ### 配置
@@ -75,20 +75,23 @@ Host Access 是一个基于WF-ONOS的宽带接入APP. 目前只支持IPOE接入�
 启动结束后，有提示消息，并且所有进程在后台运行。
 
 ### REST配置Host Access接入方式
-1）手动添加用户
+	1）手动添加用户
 
-$ curl --user karaf:karaf -H "Content-Type: application/json" -X POST --data '{"user":{"userIp":"192.168.255.1","userMac":"d6:b4:34:4c:6a:71","vlanid":"0", "dns1IP":"100.1.1.2","dns2IP":"100.1.1.100","routeIP":"100.100.1.1","deviceId":"of:0000000000000001","output":"2","portnum":"1","authstate":"0","leasetime":"1200","username":"test1","password":"pass1"}}' http://192.168.255.131:8181/onos/hostaccessrest/hostaccessuser/users
+	$ curl --user karaf:karaf -H "Content-Type: application/json" -X POST --data '{"user":{"userIp":"192.168.255.1","userMac":"d6:b4:34:4c:6a:71","vlanid":"0", "dns1IP":"100.1.1.2","dns2IP":"100.1.1.100","routeIP":"100.100.1.1","deviceId":"of:0000000000000001","output":"2","portnum":"1","authstate":"0","leasetime":"1200","username":"test1","password":"pass1"}}' http://192.168.255.131:8181/onos/hostaccessrest/hostaccessuser/users
 
-2)删除用户
+	2)删除用户
 
- curl --user karaf:karaf -H "Content-Type: application/json" -X DELETE --data '{"user":{"userIp":"10.10.10.100","userMac":"28:D2:44:32:BC:3A","vlanid":"0"}}' http://192.168.6.126:8181/onos/hostaccessrest/hostaccessuser/users
-3）配置vbng
+	 curl --user karaf:karaf -H "Content-Type: application/json" -X DELETE --data '{"user":{"userIp":"10.10.10.100","userMac":"28:D2:44:32:BC:3A","vlanid":"0"}}' http://192.168.6.126:8181/onos/hostaccessrest/hostaccessuser/users
+	3）配置vbng
 
-1)curl --user karaf:karaf -H "Content-Type: application/json" -X POST --data '{"vbuiconfig":{"virtualip":"10.10.10.2","virtualmac":"00:0b:29:7e:80:7a","startip":"10.10.10.3","endip":"10.10.10.100","netmask":"255.255.255.0","domainserver":"130.1.1.1","domainserversecond":"130.1.1.2","ttl":"127","leasetime":"36634","rebindtime":"3322","renewtime":"3222","broadcastaddress":"10.10.10.255"}}' http://192.168.6.126:8181/onos/hostaccessrest/hostaccessdhcp/config
+	1)curl --user karaf:karaf -H "Content-Type: application/json" -X POST --data '{"vbuiconfig":{"virtualip":"10.10.10.2","virtualmac":"00:0b:29:7e:80:7a","startip":"10.10.10.3","endip":"10.10.10.100","netmask":"255.255.255.0","domainserver":"130.1.1.1","domainserversecond":"130.1.1.2","ttl":"127","leasetime":"36634","rebindtime":"3322","renewtime":"3222","broadcastaddress":"10.10.10.255"}}' http://192.168.6.126:8181/onos/hostaccessrest/hostaccessdhcp/config
 
-4）获取vbng配置
-curl --user karaf:karaf -H "Content-Type: application/json" -X GET http://192.168.255.131:8181/onos/hostaccessrest/hostaccessdhcp/config
+	4）获取vbng配置
+	curl --user karaf:karaf -H "Content-Type: application/json" -X GET http://192.168.255.131:8181/onos/hostaccessrest/hostaccessdhcp/config
 
+### 使用说明
+HostAccess是一款基于ONOS的宽带接入程序， 有认证强推，Radius认证，DHCP和Relay等功能。内置Portal和Radius. 
+也可以修改配置。连接外部AAA。 目前免费版本支持200用户。如果有需求超过200用户，请联系我们。我们有合适版本满足你的要求。
 
 
 
